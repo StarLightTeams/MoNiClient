@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -32,7 +33,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class GameJPanel extends JPanel implements MouseMotionListener, Runnable {
 	JTextArea jt;
 	JTextArea jt2;
-
+	Socket s;
 	public GameJPanel() {
 		this.setLayout(null);
 		jt = new JTextArea(100, 430);
@@ -72,7 +73,22 @@ public class GameJPanel extends JPanel implements MouseMotionListener, Runnable 
 	}
 
 	public void onclick() {
-
+		try {
+			OutputStream output =s.getOutputStream();
+			//
+			String ss= "ok";
+			//转为byte数组
+			byte[] b =ss.getBytes();
+			//写入outputstream
+			output.write(b);
+			//刷新流，发送
+			output.flush();
+			
+			Thread.sleep(1000);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			//sockets.remove(socket);
+		}
 	}
 
 	public void run() {
@@ -87,14 +103,14 @@ public class GameJPanel extends JPanel implements MouseMotionListener, Runnable 
 			}
 			repaint();
 		} while (!a);
-		while (true) {
-
-		}
+//		while (true) {
+//			
+//		}
 	}
 
 	public boolean connectServer() {
 		try {
-			Socket s = new Socket("127.0.0.1", 10020);
+			 s = new Socket("127.0.0.1", 10020);
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
