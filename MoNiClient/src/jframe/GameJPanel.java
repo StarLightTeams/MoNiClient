@@ -24,6 +24,7 @@ import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -33,6 +34,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class GameJPanel extends JPanel implements MouseMotionListener, Runnable {
 	JTextArea jt;
 	JTextArea jt2;
+	JTextArea jt3;
 	Socket s;
 	public GameJPanel() {
 		this.setLayout(null);
@@ -40,19 +42,33 @@ public class GameJPanel extends JPanel implements MouseMotionListener, Runnable 
 		jt.setSize(100, 200);
 		jt.setBounds(50, 100, 260, 500);
 		this.add(jt);
-
+		
+		JLabel jl1 =new JLabel("账号");
+		jl1.setBounds(340, 100, 80, 80);
+		this.add(jl1);
+		
 		jt2 = new JTextArea(100, 43);
 		 jt2.setSize(50,20);
 		jt2.setBounds(400, 100, 150, 100);
 		this.add(jt2);
-		JButton b1 = new JButton("确定");
+		
+		JLabel jl2 =new JLabel("密码");
+		jl2.setBounds(340, 300, 80, 80);
+		this.add(jl2);
+		
+		jt3 = new JTextArea(100, 83);
+		 jt3.setSize(50,20);
+		jt3.setBounds(400, 300, 150, 100);
+		this.add(jt3);
+		
+		JButton b1 = new JButton("登录");
 		b1.setSize(100, 100);
 		b1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onclick();
 			}
 		});
-		b1.setBounds(400, 300, 100, 100);
+		b1.setBounds(400, 500, 100, 100);
 		this.add(b1);
 	}
 
@@ -74,9 +90,12 @@ public class GameJPanel extends JPanel implements MouseMotionListener, Runnable 
 
 	public void onclick() {
 		try {
+			String zh =jt2.getText();
+			String mm =jt3.getText();
 			OutputStream output =s.getOutputStream();
 			//
-			String ss= "ok";
+			String ss= "zh:"+zh+",mm:"+mm;
+			System.out.println(ss);
 			//转为byte数组
 			byte[] b =ss.getBytes();
 			//写入outputstream
